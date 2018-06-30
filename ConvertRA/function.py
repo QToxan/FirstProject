@@ -15,7 +15,7 @@ def get_arabic(roman_number):
     if(get_roman(result) == roman_number[-1::-1]):
         return result
     else:
-        return "Bad input"
+        raise Exception("Недопустимое число")
 
 
 
@@ -27,7 +27,7 @@ def get_roman(arabic_number):
     number = int(arabic_number)
 
     if number < 1 or number > 3999:
-        return "Bad input"
+        raise Exception("Недопустимое число")
 
     for i in range(len(group[0])):
         j = 0
@@ -40,15 +40,18 @@ def get_roman(arabic_number):
 ARABIC = set('0123456789')
 ROMAN = set('IVXLCDM')
 def convert_number(instr):
-    in_set = set(str(instr))
-    res = 0
-    if (len(in_set) == 0 ):
-        res = ''
-    elif (in_set <= ARABIC):
-        res = get_roman(instr)
-    elif(in_set <= ROMAN):
-        res = get_arabic(instr)
-    else:
-        res = "Error: Недопустимые символы"
+    try:
+        in_set = set(str(instr))
+        res = 0
+        if (len(in_set) == 0 ):
+            res = ''
+        elif (in_set <= ARABIC):
+            res = get_roman(instr)
+        elif(in_set <= ROMAN):
+            res = get_arabic(instr)
+        else:
+            raise Exception("Недопустимые символы")
 
-    return res
+        return res
+    except Exception as e:
+        return "Error: " + str(e)
